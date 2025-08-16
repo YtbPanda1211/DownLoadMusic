@@ -162,7 +162,7 @@
             // Mock download (in a real app, this would call your backend to process the download)
             setTimeout(() => {
                 spinner.style.display = 'none';
-                alert(`Mô phỏng: Đã tải bài nhạc với chất lượng ${quality}kbps\n\nLưu ý: Đây chỉ là mô phỏng. Trong ứng dụng thực tế, bạn cần một backend server để xử lý tải nhạc.`);
+                alert(`Mô phỏng: Đã tải bài nhạc với chất lượng ${quality}kbps\n\nLưu ý: Bạn đang thiếu dữ liệu nguồn API download của máy chủ nguồn. Bạn cần bổ sung liên kết API của trang web rồi thử lại sau!.`);
             }, 2000);
         }
         
