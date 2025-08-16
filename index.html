@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Công cụ tải nhạc Beatport & Soundeo</title>
+    <title>Công cụ tải nhạc</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .loading-spinner {
             border: 4px solid rgba(0, 0, 0, 0.1);
@@ -14,165 +13,30 @@
             width: 30px;
             height: 30px;
             animation: spin 1s linear infinite;
-            display: none;
         }
-        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
-        .platform-logo {
-            width: 120px;
-            height: 40px;
-            object-fit: contain;
-        }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
-    <div class="container mx-auto px-4 py-12 max-w-3xl">
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-            <div class="p-6">
-                <h1 class="text-3xl font-bold text-center text-indigo-700 mb-2">Công cụ tải nhạc</h1>
-                <p class="text-center text-gray-600 mb-8">Nhập link bài nhạc từ Beatport hoặc Soundeo để tải về</p>
-                
-                <div class="flex justify-center space-x-8 mb-8">
-                    <div class="platform-item text-center">
-                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8c55dbb4-5244-46bc-a07c-e807e0e2737b.png" alt="Beatport logo - dark background with white text" class="platform-logo mb-2">
-                        <p class="text-sm text-gray-500">Nhạc điện tử, EDM</p>
-                    </div>
-                    <div class="platform-item text-center">
-                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a211911e-afd1-4c45-a0a8-86a91a08c9fd.png" alt="Soundeo logo - purple background with white text" class="platform-logo mb-2">
-                        <p class="text-sm text-gray-500">Đa dạng thể loại</p>
-                    </div>
-                </div>
-                
-                <div class="mb-6">
-                    <label for="musicUrl" class="block text-sm font-medium text-gray-700 mb-2">Dán link bài nhạc</label>
-                    <div class="flex">
-                        <input type="text" id="musicUrl" placeholder="https://www.beatport.com/track/track-name/12345678" class="flex-grow px-4 py-2 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                        <button onclick="fetchTrackInfo()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-r-lg transition duration-200">
-                            Phân tích
-                        </button>
-                    </div>
-                </div>
-                
-                <div id="errorMessage" class="text-red-500 text-sm mb-4 hidden"></div>
-                
-                <div id="trackInfo" class="hidden">
-                    <div class="bg-gray-50 rounded-lg p-4 mb-6">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 mr-4">
-                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7e8741a0-59d3-47ee-ba9c-4965146aea26.png" alt="Track cover placeholder - blue background with white text" id="trackCover" class="w-16 h-16 rounded">
-                            </div>
-                            <div>
-                                <h3 id="trackTitle" class="font-bold text-lg">Tên bài hát</h3>
-                                <p id="trackArtist" class="text-gray-600">Nghệ sĩ</p>
-                                <p id="trackLabel" class="text-gray-500 text-sm">Nhãn đĩa</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Chất lượng</label>
-                        <div class="flex space-x-4">
-                            <label class="inline-flex items-center">
-                                <input type="radio" name="quality" value="128" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500" checked>
-                                <span class="ml-2">128 kbps</span>
-                            </label>
-                            <label class="inline-flex items-center">
-                                <input type="radio" name="quality" value="320" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500">
-                                <span class="ml-2">320 kbps</span>
-                            </label>
-                            <label class="inline-flex items-center">
-                                <input type="radio" name="quality" value="lossless" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500">
-                                <span class="ml-2">Lossless</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="flex justify-center">
-                        <button onclick="downloadTrack()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-medium transition duration-200 inline-flex items-center">
-                            <span>Tải về</span>
-                            <div id="downloadSpinner" class="loading-spinner ml-2"></div>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="bg-gray-50 px-6 py-4 text-center">
-                <p class="text-sm text-gray-500">Lưu ý: Việc tải nhạc có thể vi phạm điều khoản của các nền tảng. Chỉ sử dụng phù hợp với mục đích cá nhân.</p>
-            </div>
+<body class="bg-gray-100 min-h-screen p-4">
+    <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6">
+        <h1 class="text-2xl font-bold text-center mb-4">Công cụ tải nhạc</h1>
+        
+        <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">Dán URL bài nhạc</label>
+            <input type="text" id="urlInput" placeholder="https://www.beatport.com/track/..." class="w-full p-2 border rounded">
         </div>
+        
+        <button onclick="downloadTrack()" class="w-full bg-blue-500 text-white p-2 rounded flex justify-center items-center">
+            <span id="downloadText">Tải về</span>
+            <div id="spinner" class="loading-spinner ml-2 hidden"></div>
+        </button>
+        
+        <div id="error" class="text-red-500 mt-2 hidden"></div>
     </div>
-    
-    <!-- <script>
-        function fetchTrackInfo() {
-            const url = document.getElementById('musicUrl').value.trim();
-            const errorElement = document.getElementById('errorMessage');
-            const trackInfoElement = document.getElementById('trackInfo');
-            
-            // Reset UI
-            errorElement.classList.add('hidden');
-            trackInfoElement.classList.add('hidden');
-            
-            // Validate URL
-            if (!url) {
-                showError('Vui lòng nhập URL bài nhạc');
-                return;
-            }
-            
-            if (!url.includes('beatport.com') && !url.includes('soundeo.com')) {
-                showError('Chỉ hỗ trợ link từ Beatport hoặc Soundeo');
-                return;
-            }
-            
-            // Mock fetching track info (in a real app, this would be an API call to your backend)
-            setTimeout(() => {
-                // Simulate data fetched
-                const isBeatport = url.includes('beatport.com');
-                
-                document.getElementById('trackTitle').textContent = isBeatport 
-                    ? 'Đang mô phỏng - Believe (Nicky Romero Remix)' 
-                    : 'Đang mô phỏng - Summer Nights';
-                    
-                document.getElementById('trackArtist').textContent = isBeatport 
-                    ? 'Armin van Buuren, Nadia Ali' 
-                    : 'Various Artists';
-                    
-                document.getElementById('trackLabel').textContent = isBeatport 
-                    ? 'Armada Music' 
-                    : 'Soundeo Records';
-                    
-                document.getElementById('trackCover').src = isBeatport 
-                    ? 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f1cf840f-b4d3-4236-ad0f-8d4f252dffdb.png' 
-                    : 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/eabc8ff1-02d4-4eea-9644-b95c20da8a9a.png';
-                
-                trackInfoElement.classList.remove('hidden');
-            }, 1500);
-        }
-        
-        function downloadTrack() {
-            const spinner = document.getElementById('downloadSpinner');
-            const url = document.getElementById('musicUrl').value.trim();
-            const quality = document.querySelector('input[name="quality"]:checked').value;
-            
-            spinner.style.display = 'inline-block';
-            
-            // Mock download (in a real app, this would call your backend to process the download)
-            setTimeout(() => {
-                spinner.style.display = 'none';
-                alert(`Mô phỏng: Đã tải bài nhạc với chất lượng ${quality}kbps\n\nLưu ý: Đây chỉ là mô phỏng. Trong ứng dụng thực tế, bạn cần một backend server để xử lý tải nhạc.`);
-            }, 2000);
-        }
-        
-        function showError(message) {
-            const errorElement = document.getElementById('errorMessage');
-            errorElement.textContent = message;
-            errorElement.classList.remove('hidden');
-        }
-    </script> -->
+
     <script src="script.js"></script> <!-- Liên kết tệp JavaScript -->
 </body>
 </html>
-
