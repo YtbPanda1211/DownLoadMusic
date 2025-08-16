@@ -105,7 +105,73 @@
             </div>
         </div>
     </div>
-    <script src="script.js"></script> <!-- Liên kết tệp JavaScript -->
+    
+    <script>
+        function fetchTrackInfo() {
+            const url = document.getElementById('musicUrl').value.trim();
+            const errorElement = document.getElementById('errorMessage');
+            const trackInfoElement = document.getElementById('trackInfo');
+            
+            // Reset UI
+            errorElement.classList.add('hidden');
+            trackInfoElement.classList.add('hidden');
+            
+            // Validate URL
+            if (!url) {
+                showError('Vui lòng nhập URL bài nhạc');
+                return;
+            }
+            
+            if (!url.includes('beatport.com') && !url.includes('soundeo.com')) {
+                showError('Chỉ hỗ trợ link từ Beatport hoặc Soundeo');
+                return;
+            }
+            
+            // Mock fetching track info (in a real app, this would be an API call to your backend)
+            setTimeout(() => {
+                // Simulate data fetched
+                const isBeatport = url.includes('beatport.com');
+                
+                document.getElementById('trackTitle').textContent = isBeatport 
+                    ? 'Đang mô phỏng - Believe (Nicky Romero Remix)' 
+                    : 'Đang mô phỏng - Summer Nights';
+                    
+                document.getElementById('trackArtist').textContent = isBeatport 
+                    ? 'Armin van Buuren, Nadia Ali' 
+                    : 'Various Artists';
+                    
+                document.getElementById('trackLabel').textContent = isBeatport 
+                    ? 'Armada Music' 
+                    : 'Soundeo Records';
+                    
+                document.getElementById('trackCover').src = isBeatport 
+                    ? 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f1cf840f-b4d3-4236-ad0f-8d4f252dffdb.png' 
+                    : 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/eabc8ff1-02d4-4eea-9644-b95c20da8a9a.png';
+                
+                trackInfoElement.classList.remove('hidden');
+            }, 1500);
+        }
+        
+        function downloadTrack() {
+            const spinner = document.getElementById('downloadSpinner');
+            const url = document.getElementById('musicUrl').value.trim();
+            const quality = document.querySelector('input[name="quality"]:checked').value;
+            
+            spinner.style.display = 'inline-block';
+            
+            // Mock download (in a real app, this would call your backend to process the download)
+            setTimeout(() => {
+                spinner.style.display = 'none';
+                alert(`Mô phỏng: Đã tải bài nhạc với chất lượng ${quality}kbps\n\nLưu ý: Đây chỉ là mô phỏng. Trong ứng dụng thực tế, bạn cần một backend server để xử lý tải nhạc.`);
+            }, 2000);
+        }
+        
+        function showError(message) {
+            const errorElement = document.getElementById('errorMessage');
+            errorElement.textContent = message;
+            errorElement.classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
 
